@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WoodInRub — магазин мастеров</title>
+    <!-- Шрифты: динамичный гротеск + акцентный -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,700;14..32,800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- ===== ШАПКА ===== -->
+      <header class="header">
+        <a href="#" class="logo">
+          <span class="wood">wood</span><span class="in">in</span><span class="rub">rub</span>
+          <small>Пермь</small>
+        </a>
+        <nav class="nav">
+          <a href="#">Мастера</a>
+          <a href="#">Изделия</a>
+          <a href="#">Студии</a>
+          <a href="#">Блог</a>
+        </nav>
+        <div class="header-actions">
+          <a href="#">Войти</a>
+          <a href="#">
+            Корзина
+            <span class="cart-badge">4</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- ===== ГЕРОЙ ===== -->
+      <section class="hero">
+          <div class="hero-content">
+              <h1>Магазин <br /><span>мастеров нашего края</span></h1>
+              <p class="sub">
+                  Работы, которые не купить на маркетплейсах. Поддерживаю таланты,
+                  нахожу качество.
+              </p>
+              <div class="btn-group">
+                  <a href="#" class="btn btn-primary">Найти мастера</a>
+              </div>
+          </div>
+          <div class="hero-visual">
+              <img src="./images/hero/general_screen.jpg" alt="Ручная работа из дерева" loading="lazy" />
+              <span class="hero-tag">#ручная_работа</span>
+          </div>
+      </section>
+
+      <!-- ===== МАСТЕРА ===== -->
+      <div class="section-header">
+        <h2 class="section-title">Лучшие мастера</h2>
+        <a href="#" class="section-link">Все мастера →</a>
+      </div>
+      <p class="section-sub">
+        Работаю с проверенными студиями и частными краснодеревщиками
+      </p>
+
+      <div class="masters-grid">
+        <a href="#" class="master-card">
+            <div class="master-avatar">
+                <img src="./images/masters/2.png" alt="Станислав" loading="lazy" />
+            </div>
+            <div class="master-name">Станислав</div>
+            <span class="master-badge">★ Топ-мастер</span>
+            <div class="master-stat">Работ: <span>34</span></div>
+        </a>
+        <a href="#" class="master-card">
+                    <div class="master-avatar">
+                        <img src="./images/masters/3.png" alt="Станислав" loading="lazy" />
+                    </div>
+                    <div class="master-name">Станислав</div>
+                    <span class="master-badge">★ Топ-мастер</span>
+                    <div class="master-stat">Работ: <span>34</span></div>
+                </a>
+        <a href="#" class="master-card">
+                    <div class="master-avatar">
+                        <img src="./images/masters/1.jpg" alt="Станислав" loading="lazy" />
+                    </div>
+                    <div class="master-name">Станислав</div>
+                    <span class="master-badge">★ Топ-мастер</span>
+                    <div class="master-stat">Работ: <span>34</span></div>
+                </a>
+        <a href="#" class="master-card">
+                    <div class="master-avatar">
+                        <img src="./images/masters/3.png" alt="Станислав" loading="lazy" />
+                    </div>
+                    <div class="master-name">Станислав</div>
+                    <span class="master-badge">★ Топ-мастер</span>
+                    <div class="master-stat">Работ: <span>34</span></div>
+                </a>
+        <a href="#" class="master-card">
+                    <div class="master-avatar">
+                        <img src="./images/masters/1.jpg" alt="Станислав" loading="lazy" />
+                    </div>
+                    <div class="master-name">Станислав</div>
+                    <span class="master-badge">★ Топ-мастер</span>
+                    <div class="master-stat">Работ: <span>34</span></div>
+                </a>
+      </div>
+
+      <!-- ===== ТОВАРЫ С ПРИВЯЗКОЙ К МАСТЕРУ ===== -->
+      <div class="section-header">
+        <h2 class="section-title">Изделия от мастеров</h2>
+        <a href="#" class="section-link">Весь каталог →</a>
+      </div>
+      <p class="section-sub">Каждая вещь — с душой и подписью автора</p>
+
+      <div class="products-grid">
+        <!-- ============================================================ -->
+        <!-- КАРТОЧКА ТОВАРА — ШАБЛОН (копируйте и вставляйте)             -->
+        <!-- ============================================================ -->
+        <div class="product-card">
+          <div class="product-image">
+            <img src="./products/2.jpeg" />
+
+            <div class="master-tag">Студия: <strong>«Дубль»</strong></div>
+          </div>
+          <div class="product-info">
+            <div class="badge">новинка</div>
+            <div class="product-top">
+              <h3 class="product-name">Стул «Аскет»</h3>
+              <span class="product-rating">★ 4.9</span>
+            </div>
+            <div class="product-desc">Орех, металл, мат</div>
+            <div class="product-master">✧ <a href="#">Студия «Дубль»</a></div>
+            <div class="product-footer">
+              <span class="product-price">112 300 ₽</span>
+              <button class="btn-add">В корзину</button>
+            </div>
+          </div>
+        </div>
+        <!-- ============================================================ -->
+
+        <!-- Карточка 2 -->
+        <div class="product-card">
+          <div class="product-image">
+            <img src="./products/1.jpeg" />
+
+            <div class="master-tag">Студия: <strong>«Дубль»</strong></div>
+          </div>
+          <div class="product-info">
+            <div class="badge">новинка</div>
+            <div class="product-top">
+              <h3 class="product-name">Стул «Аскет»</h3>
+              <span class="product-rating">★ 4.9</span>
+            </div>
+            <div class="product-desc">Орех, металл, мат</div>
+            <div class="product-master">✧ <a href="#">Студия «Дубль»</a></div>
+            <div class="product-footer">
+              <span class="product-price">112 300 ₽</span>
+              <button class="btn-add">В корзину</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Карточка 3 -->
+        <div class="product-card">
+          <div class="product-image">
+            <img src="./products/4.jpeg" />
+
+            <div class="master-tag">Студия: <strong>«Дубль»</strong></div>
+          </div>
+          <div class="product-info">
+            <div class="badge">новинка</div>
+            <div class="product-top">
+              <h3 class="product-name">Стул «Аскет»</h3>
+              <span class="product-rating">★ 4.9</span>
+            </div>
+            <div class="product-desc">Орех, металл, мат</div>
+            <div class="product-master">✧ <a href="#">Студия «Дубль»</a></div>
+            <div class="product-footer">
+              <span class="product-price">112 300 ₽</span>
+              <button class="btn-add">В корзину</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Карточка 4 -->
+        <div class="product-card">
+          <div class="product-image">
+            <img src="./products/1.jpeg" />
+
+            <div class="master-tag">Студия: <strong>«Дубль»</strong></div>
+          </div>
+          <div class="product-info">
+            <div class="badge">новинка</div>
+            <div class="product-top">
+              <h3 class="product-name">Стул «Аскет»</h3>
+              <span class="product-rating">★ 4.9</span>
+            </div>
+            <div class="product-desc">Орех, металл, мат</div>
+            <div class="product-master">✧ <a href="#">Студия «Дубль»</a></div>
+            <div class="product-footer">
+              <span class="product-price">112 300 ₽</span>
+              <button class="btn-add">В корзину</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Карточка 5 -->
+        <div class="product-card">
+          <div class="product-image">
+            <img src="./products/4.jpeg" />
+
+            <div class="master-tag">Студия: <strong>«Дубль»</strong></div>
+          </div>
+          <div class="product-info">
+            <div class="badge">новинка</div>
+            <div class="product-top">
+              <h3 class="product-name">Стул «Аскет»</h3>
+              <span class="product-rating">★ 4.9</span>
+            </div>
+            <div class="product-desc">Орех, металл, мат</div>
+            <div class="product-master">✧ <a href="#">Студия «Дубль»</a></div>
+            <div class="product-footer">
+              <span class="product-price">112 300 ₽</span>
+              <button class="btn-add">В корзину</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Карточка 6 -->
+        <div class="product-card">
+          <div class="product-image">
+            <img src="./products/1.jpeg" />
+
+            <div class="master-tag">Студия: <strong>«Дубль»</strong></div>
+          </div>
+          <div class="product-info">
+            <div class="badge">новинка</div>
+            <div class="product-top">
+              <h3 class="product-name">Стул «Аскет»</h3>
+              <span class="product-rating">★ 4.9</span>
+            </div>
+            <div class="product-desc">Орех, металл, мат</div>
+            <div class="product-master">✧ <a href="#">Студия «Дубль»</a></div>
+            <div class="product-footer">
+              <span class="product-price">112 300 ₽</span>
+              <button class="btn-add">В корзину</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Карточка 7 -->
+        <div class="product-card">
+          <div class="product-image">
+            <img src="./products/2.jpeg" />
+
+            <div class="master-tag">Студия: <strong>«Дубль»</strong></div>
+          </div>
+          <div class="product-info">
+            <div class="badge">новинка</div>
+            <div class="product-top">
+              <h3 class="product-name">Стул «Аскет»</h3>
+              <span class="product-rating">★ 4.9</span>
+            </div>
+            <div class="product-desc">Орех, металл, мат</div>
+            <div class="product-master">✧ <a href="#">Студия «Дубль»</a></div>
+            <div class="product-footer">
+              <span class="product-price">112 300 ₽</span>
+              <button class="btn-add">В корзину</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Карточка 8 -->
+        <div class="product-card">
+          <div class="product-image">
+            <img src="./products/4.jpeg" />
+
+            <div class="master-tag">Студия: <strong>«Дубль»</strong></div>
+          </div>
+          <div class="product-info">
+            <div class="badge">новинка</div>
+            <div class="product-top">
+              <h3 class="product-name">Стул «Аскет»</h3>
+              <span class="product-rating">★ 4.9</span>
+            </div>
+            <div class="product-desc">Орех, металл, мат</div>
+            <div class="product-master">✧ <a href="#">Студия «Дубль»</a></div>
+            <div class="product-footer">
+              <span class="product-price">112 300 ₽</span>
+              <button class="btn-add">В корзину</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== ПОДВАЛ ===== -->
+      <footer class="footer">
+        <div class="footer-grid">
+          <!-- Колонка 1: Логотип и описание -->
+          <div class="footer-col">
+            <a href="#" class="logo" style="font-size: 24px">
+              <span class="wood">wood</span><span class="in">in</span
+              ><span class="rub">rub</span>
+            </a>
+            <p class="footer-desc">
+              Представляю работы лучших мастеров. Беру на себя фото, описание,
+              общение с клиентами и рекламу.
+            </p>
+            <div class="footer-social">
+              <a href="#" aria-label="Instagram">Instagram</a>
+              <a href="#" aria-label="YouTube">YouTube</a>
+              <a href="#" aria-label="Telegram">Telegram</a>
+              <a href="#" aria-label="VK">VK</a>
+            </div>
+          </div>
+
+          <!-- Колонка 2: Для покупателей -->
+          <div class="footer-col">
+            <h4>Покупателям</h4>
+            <a href="#">Каталог</a>
+            <a href="#">Доставка и оплата</a>
+            <a href="#">Возврат</a>
+            <a href="#">Отзывы</a>
+          </div>
+
+          <!-- Колонка 3: Для мастеров (важное!) -->
+          <div class="footer-col">
+            <h4>Мастерам</h4>
+            <a href="#" class="footer-highlight">Стать партнёром</a>
+            <a href="#">Условия сотрудничества</a>
+            <a href="#">Как мы с вами работаем</a>
+            <a href="#">Примеры наших проектов</a>
+          </div>
+
+          <!-- Колонка 4: Контакты и подписка -->
+          <div class="footer-col">
+            <h4>Контакты</h4>
+            <a href="mailto:info@woodinrub.ru">info@woodinrub.ru</a>
+            <a href="tel:+79001234567">+7 (900) 123-45-67</a>
+            <p
+              style="color: var(--text-gray); font-size: 13px; margin-top: 8px"
+            >
+              Работаем по всей России
+            </p>
+
+            <!-- Форма подписки -->
+            <div class="footer-subscribe">
+              <p
+                style="
+                  font-size: 13px;
+                  color: var(--text-gray);
+                  margin-top: 12px;
+                "
+              >
+                Подпишитесь на новинки
+              </p>
+              <form class="subscribe-form">
+                <input type="email" placeholder="Ваш email" required />
+                <button type="submit">→</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Нижняя строка: копирайт и юридические ссылки -->
+        <div class="footer-bottom">
+          <span>© 2026 WOODINRUB. Все права защищены.</span>
+          <div class="footer-legal">
+            <a href="#">Политика конфиденциальности</a>
+            <a href="#">Пользовательское соглашение</a>
+            <a href="#">Оферта для мастеров</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
