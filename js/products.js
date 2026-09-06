@@ -2,9 +2,9 @@
 // ФУНКЦИЯ ДЛЯ СОЗДАНИЯ КАРТОЧКИ ТОВАРА
 // ============================================================
 function createProductCard(product) {
-    const metaData = product.meta_data || [];
+    // 👇 Защита от NULL и не-массивов
+    const metaData = Array.isArray(product.meta_data) ? product.meta_data : [];
     const masterShort = product.master_name || 'Мастер';
-    // 👇 Добавляем полный URL к API для картинок
     const imageUrl = `http://localhost:3000${product.image}`;
 
     return `

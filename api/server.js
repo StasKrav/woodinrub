@@ -102,13 +102,14 @@ app.get('/api/products/:slug', async (req, res) => {
 });
 
 // ============================================================
-// API: ПОЛУЧИТЬ ВСЕХ МАСТЕРОВ
+// API: ПОЛУЧИТЬ ВСЕХ МАСТЕРОВ (с extra_data)
 // ============================================================
 app.get('/api/masters', async (req, res) => {
     try {
         const result = await pool.query(`
             SELECT 
-                *,
+                id, slug, name, short_name, title, bio, badge, 
+                rating, works_count, extra_data, created_at,
                 CONCAT('/masters/', slug, '/avatar.jpg') as avatar
             FROM masters 
             WHERE is_active = true 
@@ -191,6 +192,17 @@ app.get('/api/masters/:slug/products', async (req, res) => {
         console.error(err);
         res.status(500).json({ error: 'Ошибка при получении товаров мастера' });
     }
+});
+
+// ============================================================
+// СТРАНИЦЫ
+// ============================================================
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../index.html'));
+});
+
+app.get('/masters', (req, res) => {
+    res.sendFile(path.join(__dirname, '../masters/index.html'));
 });
 
 // ============================================================

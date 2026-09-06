@@ -27,10 +27,10 @@
           <small>Пермь</small>
         </a>
         <nav class="nav">
-          <a href="#">Мастера</a>
-          <a href="#">Изделия</a>
-          <a href="#">Студии</a>
-          <a href="#">Блог</a>
+            <a href="/masters/">Мастера</a>
+            <a href="/catalog/">Изделия</a>
+            <a href="/studios/">Студии</a>
+            <a href="/blog/">Блог</a>
         </nav>
         <div class="header-actions">
           <a href="#">Войти</a>
@@ -119,185 +119,188 @@
       <p class="section-sub">Каждая вещь — с душой и подписью автора</p>
 
       <div class="products-grid">
-        <!-- ============================================================ -->
-        <!-- КАРТОЧКА ТОВАРА — ШАБЛОН (копируйте и вставляйте)             -->
-        <!-- ============================================================ -->
-        <div class="product-card">
-          <div class="product-image">
-            <img src="./products/2.jpeg" />
 
-            <div class="master-tag">Студия: <strong>«Дубль»</strong></div>
-          </div>
-          <div class="product-info">
-            <div class="badge">новинка</div>
-            <div class="product-top">
-              <h3 class="product-name">Стул «Аскет»</h3>
-              <span class="product-rating">★ 4.9</span>
-            </div>
-            <div class="product-desc">Орех, металл, мат</div>
-            <div class="product-master">✧ <a href="#">Студия «Дубль»</a></div>
-            <div class="product-footer">
-              <span class="product-price">112 300 ₽</span>
-              <button class="btn-add">В корзину</button>
-            </div>
-          </div>
-        </div>
-        <!-- ============================================================ -->
+      <div class="products-grid" id="productsContainer"></div>
 
-        <!-- Карточка 2 -->
-        <div class="product-card">
-          <div class="product-image">
-            <img src="./products/1.jpeg" />
-
-            <div class="master-tag">Студия: <strong>«Дубль»</strong></div>
-          </div>
-          <div class="product-info">
-            <div class="badge">новинка</div>
-            <div class="product-top">
-              <h3 class="product-name">Стул «Аскет»</h3>
-              <span class="product-rating">★ 4.9</span>
-            </div>
-            <div class="product-desc">Орех, металл, мат</div>
-            <div class="product-master">✧ <a href="#">Студия «Дубль»</a></div>
-            <div class="product-footer">
-              <span class="product-price">112 300 ₽</span>
-              <button class="btn-add">В корзину</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Карточка 3 -->
-        <div class="product-card">
-          <div class="product-image">
-            <img src="./products/4.jpeg" />
-
-            <div class="master-tag">Студия: <strong>«Дубль»</strong></div>
-          </div>
-          <div class="product-info">
-            <div class="badge">новинка</div>
-            <div class="product-top">
-              <h3 class="product-name">Стул «Аскет»</h3>
-              <span class="product-rating">★ 4.9</span>
-            </div>
-            <div class="product-desc">Орех, металл, мат</div>
-            <div class="product-master">✧ <a href="#">Студия «Дубль»</a></div>
-            <div class="product-footer">
-              <span class="product-price">112 300 ₽</span>
-              <button class="btn-add">В корзину</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Карточка 4 -->
-        <div class="product-card">
-          <div class="product-image">
-            <img src="./products/1.jpeg" />
-
-            <div class="master-tag">Студия: <strong>«Дубль»</strong></div>
-          </div>
-          <div class="product-info">
-            <div class="badge">новинка</div>
-            <div class="product-top">
-              <h3 class="product-name">Стул «Аскет»</h3>
-              <span class="product-rating">★ 4.9</span>
-            </div>
-            <div class="product-desc">Орех, металл, мат</div>
-            <div class="product-master">✧ <a href="#">Студия «Дубль»</a></div>
-            <div class="product-footer">
-              <span class="product-price">112 300 ₽</span>
-              <button class="btn-add">В корзину</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Карточка 5 -->
-        <div class="product-card">
-          <div class="product-image">
-            <img src="./products/4.jpeg" />
-
-            <div class="master-tag">Студия: <strong>«Дубль»</strong></div>
-          </div>
-          <div class="product-info">
-            <div class="badge">новинка</div>
-            <div class="product-top">
-              <h3 class="product-name">Стул «Аскет»</h3>
-              <span class="product-rating">★ 4.9</span>
-            </div>
-            <div class="product-desc">Орех, металл, мат</div>
-            <div class="product-master">✧ <a href="#">Студия «Дубль»</a></div>
-            <div class="product-footer">
-              <span class="product-price">112 300 ₽</span>
-              <button class="btn-add">В корзину</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Карточка 6 -->
-        <div class="product-card">
-          <div class="product-image">
-            <img src="./products/1.jpeg" />
-
-            <div class="master-tag">Студия: <strong>«Дубль»</strong></div>
-          </div>
-          <div class="product-info">
-            <div class="badge">новинка</div>
-            <div class="product-top">
-              <h3 class="product-name">Стул «Аскет»</h3>
-              <span class="product-rating">★ 4.9</span>
-            </div>
-            <div class="product-desc">Орех, металл, мат</div>
-            <div class="product-master">✧ <a href="#">Студия «Дубль»</a></div>
-            <div class="product-footer">
-              <span class="product-price">112 300 ₽</span>
-              <button class="btn-add">В корзину</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Карточка 7 -->
-        <div class="product-card">
-          <div class="product-image">
-            <img src="./products/2.jpeg" />
-
-            <div class="master-tag">Студия: <strong>«Дубль»</strong></div>
-          </div>
-          <div class="product-info">
-            <div class="badge">новинка</div>
-            <div class="product-top">
-              <h3 class="product-name">Стул «Аскет»</h3>
-              <span class="product-rating">★ 4.9</span>
-            </div>
-            <div class="product-desc">Орех, металл, мат</div>
-            <div class="product-master">✧ <a href="#">Студия «Дубль»</a></div>
-            <div class="product-footer">
-              <span class="product-price">112 300 ₽</span>
-              <button class="btn-add">В корзину</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Карточка 8 -->
-        <div class="product-card">
-          <div class="product-image">
-            <img src="./products/4.jpeg" />
-
-            <div class="master-tag">Студия: <strong>«Дубль»</strong></div>
-          </div>
-          <div class="product-info">
-            <div class="badge">новинка</div>
-            <div class="product-top">
-              <h3 class="product-name">Стул «Аскет»</h3>
-              <span class="product-rating">★ 4.9</span>
-            </div>
-            <div class="product-desc">Орех, металл, мат</div>
-            <div class="product-master">✧ <a href="#">Студия «Дубль»</a></div>
-            <div class="product-footer">
-              <span class="product-price">112 300 ₽</span>
-              <button class="btn-add">В корзину</button>
-            </div>
-          </div>
-        </div>
-      </div>
+<!--         <!-- ============================================================ --> -->
+<!--         <!-- КАРТОЧКА ТОВАРА — ШАБЛОН (копируйте и вставляйте)             --> -->
+<!--         <!-- ============================================================ --> -->
+<!--         <div class="product-card"> -->
+<!--           <div class="product-image"> -->
+<!--             <img src="./products/2.jpeg" /> -->
+<!--  -->
+<!--             <div class="master-tag">Студия: <strong>«Дубль»</strong></div> -->
+<!--           </div> -->
+<!--           <div class="product-info"> -->
+<!--             <div class="badge">новинка</div> -->
+<!--             <div class="product-top"> -->
+<!--               <h3 class="product-name">Стул «Аскет»</h3> -->
+<!--               <span class="product-rating">★ 4.9</span> -->
+<!--             </div> -->
+<!--             <div class="product-desc">Орех, металл, мат</div> -->
+<!--             <div class="product-master">✧ <a href="#">Студия «Дубль»</a></div> -->
+<!--             <div class="product-footer"> -->
+<!--               <span class="product-price">112 300 ₽</span> -->
+<!--               <button class="btn-add">В корзину</button> -->
+<!--             </div> -->
+<!--           </div> -->
+<!--         </div> -->
+<!--         <!-- ============================================================ --> -->
+<!--  -->
+<!--         <!-- Карточка 2 --> -->
+<!--         <div class="product-card"> -->
+<!--           <div class="product-image"> -->
+<!--             <img src="./products/1.jpeg" /> -->
+<!--  -->
+<!--             <div class="master-tag">Студия: <strong>«Дубль»</strong></div> -->
+<!--           </div> -->
+<!--           <div class="product-info"> -->
+<!--             <div class="badge">новинка</div> -->
+<!--             <div class="product-top"> -->
+<!--               <h3 class="product-name">Стул «Аскет»</h3> -->
+<!--               <span class="product-rating">★ 4.9</span> -->
+<!--             </div> -->
+<!--             <div class="product-desc">Орех, металл, мат</div> -->
+<!--             <div class="product-master">✧ <a href="#">Студия «Дубль»</a></div> -->
+<!--             <div class="product-footer"> -->
+<!--               <span class="product-price">112 300 ₽</span> -->
+<!--               <button class="btn-add">В корзину</button> -->
+<!--             </div> -->
+<!--           </div> -->
+<!--         </div> -->
+<!--  -->
+<!--         <!-- Карточка 3 --> -->
+<!--         <div class="product-card"> -->
+<!--           <div class="product-image"> -->
+<!--             <img src="./products/4.jpeg" /> -->
+<!--  -->
+<!--             <div class="master-tag">Студия: <strong>«Дубль»</strong></div> -->
+<!--           </div> -->
+<!--           <div class="product-info"> -->
+<!--             <div class="badge">новинка</div> -->
+<!--             <div class="product-top"> -->
+<!--               <h3 class="product-name">Стул «Аскет»</h3> -->
+<!--               <span class="product-rating">★ 4.9</span> -->
+<!--             </div> -->
+<!--             <div class="product-desc">Орех, металл, мат</div> -->
+<!--             <div class="product-master">✧ <a href="#">Студия «Дубль»</a></div> -->
+<!--             <div class="product-footer"> -->
+<!--               <span class="product-price">112 300 ₽</span> -->
+<!--               <button class="btn-add">В корзину</button> -->
+<!--             </div> -->
+<!--           </div> -->
+<!--         </div> -->
+<!--  -->
+<!--         <!-- Карточка 4 --> -->
+<!--         <div class="product-card"> -->
+<!--           <div class="product-image"> -->
+<!--             <img src="./products/1.jpeg" /> -->
+<!--  -->
+<!--             <div class="master-tag">Студия: <strong>«Дубль»</strong></div> -->
+<!--           </div> -->
+<!--           <div class="product-info"> -->
+<!--             <div class="badge">новинка</div> -->
+<!--             <div class="product-top"> -->
+<!--               <h3 class="product-name">Стул «Аскет»</h3> -->
+<!--               <span class="product-rating">★ 4.9</span> -->
+<!--             </div> -->
+<!--             <div class="product-desc">Орех, металл, мат</div> -->
+<!--             <div class="product-master">✧ <a href="#">Студия «Дубль»</a></div> -->
+<!--             <div class="product-footer"> -->
+<!--               <span class="product-price">112 300 ₽</span> -->
+<!--               <button class="btn-add">В корзину</button> -->
+<!--             </div> -->
+<!--           </div> -->
+<!--         </div> -->
+<!--  -->
+<!--         <!-- Карточка 5 --> -->
+<!--         <div class="product-card"> -->
+<!--           <div class="product-image"> -->
+<!--             <img src="./products/4.jpeg" /> -->
+<!--  -->
+<!--             <div class="master-tag">Студия: <strong>«Дубль»</strong></div> -->
+<!--           </div> -->
+<!--           <div class="product-info"> -->
+<!--             <div class="badge">новинка</div> -->
+<!--             <div class="product-top"> -->
+<!--               <h3 class="product-name">Стул «Аскет»</h3> -->
+<!--               <span class="product-rating">★ 4.9</span> -->
+<!--             </div> -->
+<!--             <div class="product-desc">Орех, металл, мат</div> -->
+<!--             <div class="product-master">✧ <a href="#">Студия «Дубль»</a></div> -->
+<!--             <div class="product-footer"> -->
+<!--               <span class="product-price">112 300 ₽</span> -->
+<!--               <button class="btn-add">В корзину</button> -->
+<!--             </div> -->
+<!--           </div> -->
+<!--         </div> -->
+<!--  -->
+<!--         <!-- Карточка 6 --> -->
+<!--         <div class="product-card"> -->
+<!--           <div class="product-image"> -->
+<!--             <img src="./products/1.jpeg" /> -->
+<!--  -->
+<!--             <div class="master-tag">Студия: <strong>«Дубль»</strong></div> -->
+<!--           </div> -->
+<!--           <div class="product-info"> -->
+<!--             <div class="badge">новинка</div> -->
+<!--             <div class="product-top"> -->
+<!--               <h3 class="product-name">Стул «Аскет»</h3> -->
+<!--               <span class="product-rating">★ 4.9</span> -->
+<!--             </div> -->
+<!--             <div class="product-desc">Орех, металл, мат</div> -->
+<!--             <div class="product-master">✧ <a href="#">Студия «Дубль»</a></div> -->
+<!--             <div class="product-footer"> -->
+<!--               <span class="product-price">112 300 ₽</span> -->
+<!--               <button class="btn-add">В корзину</button> -->
+<!--             </div> -->
+<!--           </div> -->
+<!--         </div> -->
+<!--  -->
+<!--         <!-- Карточка 7 --> -->
+<!--         <div class="product-card"> -->
+<!--           <div class="product-image"> -->
+<!--             <img src="./products/2.jpeg" /> -->
+<!--  -->
+<!--             <div class="master-tag">Студия: <strong>«Дубль»</strong></div> -->
+<!--           </div> -->
+<!--           <div class="product-info"> -->
+<!--             <div class="badge">новинка</div> -->
+<!--             <div class="product-top"> -->
+<!--               <h3 class="product-name">Стул «Аскет»</h3> -->
+<!--               <span class="product-rating">★ 4.9</span> -->
+<!--             </div> -->
+<!--             <div class="product-desc">Орех, металл, мат</div> -->
+<!--             <div class="product-master">✧ <a href="#">Студия «Дубль»</a></div> -->
+<!--             <div class="product-footer"> -->
+<!--               <span class="product-price">112 300 ₽</span> -->
+<!--               <button class="btn-add">В корзину</button> -->
+<!--             </div> -->
+<!--           </div> -->
+<!--         </div> -->
+<!--  -->
+<!--         <!-- Карточка 8 --> -->
+<!--         <div class="product-card"> -->
+<!--           <div class="product-image"> -->
+<!--             <img src="./products/4.jpeg" /> -->
+<!--  -->
+<!--             <div class="master-tag">Студия: <strong>«Дубль»</strong></div> -->
+<!--           </div> -->
+<!--           <div class="product-info"> -->
+<!--             <div class="badge">новинка</div> -->
+<!--             <div class="product-top"> -->
+<!--               <h3 class="product-name">Стул «Аскет»</h3> -->
+<!--               <span class="product-rating">★ 4.9</span> -->
+<!--             </div> -->
+<!--             <div class="product-desc">Орех, металл, мат</div> -->
+<!--             <div class="product-master">✧ <a href="#">Студия «Дубль»</a></div> -->
+<!--             <div class="product-footer"> -->
+<!--               <span class="product-price">112 300 ₽</span> -->
+<!--               <button class="btn-add">В корзину</button> -->
+<!--             </div> -->
+<!--           </div> -->
+<!--         </div> -->
+<!--       </div> -->
 
       <!-- ===== ПОДВАЛ ===== -->
       <footer class="footer">
@@ -305,8 +308,8 @@
           <!-- Колонка 1: Логотип и описание -->
           <div class="footer-col">
             <a href="#" class="logo" style="font-size: 24px">
-              <span class="wood">wood</span><span class="in">in</span
-              ><span class="rub">rub</span>
+              <span class="wood">wood</span><span class="in">in</span>
+              <span class="rub">rub</span>
             </a>
             <p class="footer-desc">
               Представляю работы лучших мастеров. Беру на себя фото, описание,

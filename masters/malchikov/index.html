@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Яков Мальчиков — WoodInRub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/style.css" />
+    <style>
+        /* ===== ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ СТРАНИЦЫ МАСТЕРА ===== */
+        
+        /* Хлебные крошки */
+        .breadcrumbs {
+            font-size: 13px;
+            color: var(--text-dark-gray);
+            padding: 20px 0 10px;
+            border-bottom: 1px solid var(--border-dark);
+            margin-bottom: 30px;
+        }
+        .breadcrumbs a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .breadcrumbs a:hover {
+            color: var(--text-white);
+        }
+        .breadcrumbs span {
+            color: var(--text-dark-gray);
+        }
+
+        /* Шапка мастера */
+        .master-header {
+            display: grid;
+            grid-template-columns: 160px 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-dark);
+        }
+        @media (max-width: 640px) {
+            .master-header {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 16px;
+            }
+        }
+
+        .master-avatar-large {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--border-dark);
+            flex-shrink: 0;
+            background: #2a2a2a;
+        }
+        .master-avatar-large img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        @media (max-width: 640px) {
+            .master-avatar-large {
+                width: 120px;
+                height: 120px;
+                margin: 0 auto;
+            }
+        }
+
+        .master-info h1 {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .master-info .master-title {
+            font-size: 16px;
+            color: var(--accent);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .master-info .master-title .badge-master {
+            background: var(--accent);
+            color: #0a0a0a;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 14px;
+            border-radius: 40px;
+            text-transform: uppercase;
+        }
+        .master-info .master-bio {
+            color: var(--text-gray);
+            font-size: 15px;
+            line-height: 1.7;
+            max-width: 600px;
+        }
+        .master-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+        .master-stats .stat-item {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+        .master-stats .stat-item strong {
+            color: var(--text-white);
+            font-weight: 600;
+        }
+
+        /* Секция с работами мастера */
+        .master-works {
+            margin: 30px 0 50px;
+        }
+        .master-works .section-title {
+            margin-bottom: 16px;
+        }
+
+        /* Карточка работы мастера на его странице — немного отличается */
+        .work-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            border: 1px solid var(--border-dark);
+            transition: var(--transition);
+            text-decoration: none;
+            color: var(--text-white);
+        }
+        .work-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: var(--accent-glow);
+        }
+        .work-card .work-image {
+            height: 200px;
+            background: #1a1a1a;
+            overflow: hidden;
+        }
+        .work-card .work-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .work-card:hover .work-image img {
+            transform: scale(1.03);
+        }
+        .work-card .work-info {
+            padding: 14px 16px 16px;
+        }
+        .work-card .work-info .work-name {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+        .work-card .work-info .work-desc {
+            font-size: 13px;
+            color: var(--text-gray);
+            margin-bottom: 6px;
+        }
+        .work-card .work-info .work-price {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--text-white);
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 20px;
+        }
+
+        @media (max-width: 640px) {
+            .works-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 14px;
+            }
+            .work-card .work-image {
+                height: 140px;
+            }
+            .work-card .work-info .work-name {
+                font-size: 14px;
+            }
+            .work-card .work-info .work-price {
+                font-size: 16px;
+            }
+        }
+        @media (max-width: 440px) {
+            .works-grid {
+                grid-template-columns: 1fr;
+            }
+            .work-card .work-image {
+                height: 180px;
+            }
+        }
+
+        /* Кнопка "Назад" */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            transition: var(--transition);
+            margin-bottom: 16px;
+        }
+        .back-link:hover {
+            color: var(--text-white);
+        }
+
+        /* Если у мастера нет работ */
+        .no-works {
+            color: var(--text-gray);
+            font-size: 16px;
+            padding: 30px 0;
+            text-align: center;
+            border: 1px dashed var(--border-dark);
+            border-radius: var(--radius-sm);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== ШАПКА (скопируйте из index.html) ===== -->
+        <header class="header">
+                <a href="../../index.html" class="logo">
+                  <span class="wood">wood</span><span class="in">in</span><span class="rub">rub</span>
+                  <small>Пермь</small>
+                </a>
+                <nav class="nav">
+                  <a href="#">Мастера</a>
+                  <a href="#">Изделия</a>
+                  <a href="#">Студии</a>
+                  <a href="#">Блог</a>
+                </nav>
+                <div class="header-actions">
+                  <a href="#">Войти</a>
+                  <a href="#">
+                    Корзина
+                    <span class="cart-badge">4</span>
+                  </a>
+                </div>
+              </header>
+
+        <!-- ===== ХЛЕБНЫЕ КРОШКИ ===== -->
+        <div class="breadcrumbs">
+            <a href="../../index.html">Главная</a> → 
+            <a href="/#masters">Мастера</a> → 
+            <span>Яков Мальчиков</span>
+        </div>
+
+        <!-- ===== ПРОФИЛЬ МАСТЕРА ===== -->
+        <section class="master-header">
+            <div class="master-avatar-large">
+                <img src="../../images/masters/2.png" alt="Яков Мальчиков" loading="lazy" />
+            </div>
+            <div class="master-info">
+                <h1>Яков Мальчиков</h1>
+                <div class="master-title">
+                    <span>Краснодеревщик, столяр-дизайнер</span>
+                    <span class="badge-master">★ Топ-мастер</span>
+                </div>
+                <p class="master-bio">
+                    Работаю с деревом более 15 лет. Создаю уникальную мебель и предметы интерьера. 
+                    Люблю сложные геометрические формы и натуральные фактуры. 
+                    Каждое изделие — это результат долгих поисков и любви к материалу.
+                </p>
+                <div class="master-stats">
+                    <span class="stat-item">Выполнено работ: <strong>34</strong></span>
+                    <span class="stat-item">Средний рейтинг: <strong>★ 4.9</strong></span>
+                    <span class="stat-item">На сайте с: <strong>2026</strong></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== РАБОТЫ МАСТЕРА ===== -->
+        <section class="master-works">
+            <h2 class="section-title">Изделия Стаса</h2>
+            <p class="section-sub">Каждая работа — авторское исполнение</p>
+
+            <div class="works-grid">
+                <!-- Карточка работы 1 -->
+                <a href="/products/stul-asket/" class="work-card">
+                    <div class="work-image">
+                        <img src="/products/stul-asket/main.jpg" alt="Стул Аскет" loading="lazy" />
+                    </div>
+                    <div class="work-info">
+                        <div class="work-name">Стул «Аскет»</div>
+                        <div class="work-desc">Дуб, ручная столярка</div>
+                        <div class="work-price">49 900 ₽</div>
+                    </div>
+                </a>
+
+                <!-- Карточка работы 2 -->
+                <a href="#" class="work-card">
+                    <div class="work-image">
+                        <img src="https://placehold.co/400x300/2a2a2a/ffffff?text=Стол+«Дубль»" alt="Стол Дубль" loading="lazy" />
+                    </div>
+                    <div class="work-info">
+                        <div class="work-name">Стол «Дубль»</div>
+                        <div class="work-desc">Орех, металл, эпоксид</div>
+                        <div class="work-price">89 000 ₽</div>
+                    </div>
+                </a>
+
+                <!-- Карточка работы 3 -->
+                <a href="#" class="work-card">
+                    <div class="work-image">
+                        <img src="https://placehold.co/400x300/2a2a2a/ffffff?text=Тумба+«Граф»" alt="Тумба Граф" loading="lazy" />
+                    </div>
+                    <div class="work-info">
+                        <div class="work-name">Тумба «Граф»</div>
+                        <div class="work-desc">Венге, ручная резьба</div>
+                        <div class="work-price">34 500 ₽</div>
+                    </div>
+                </a>
+
+                <!-- Карточка работы 4 -->
+                <a href="#" class="work-card">
+                    <div class="work-image">
+                        <img src="https://placehold.co/400x300/2a2a2a/ffffff?text=Зеркало+«Геометрия»" alt="Зеркало Геометрия" loading="lazy" />
+                    </div>
+                    <div class="work-info">
+                        <div class="work-name">Зеркало «Геометрия»</div>
+                        <div class="work-desc">Кедр, медь</div>
+                        <div class="work-price">28 900 ₽</div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- ===== ПОДВАЛ (скопируйте из index.html) ===== -->
+        <footer class="footer">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="/" class="logo" style="font-size: 24px">
+                        <span class="wood">wood</span><span class="in">in</span><span class="rub">rub</span>
+                    </a>
+                    <p class="footer-desc">
+                        Представляю работы лучших мастеров. Беру на себя фото, описание,
+                        общение с клиентами и рекламу.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Instagram">Instagram</a>
+                        <a href="#" aria-label="YouTube">YouTube</a>
+                        <a href="#" aria-label="Telegram">Telegram</a>
+                        <a href="#" aria-label="VK">VK</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Покупателям</h4>
+                    <a href="#">Каталог</a>
+                    <a href="#">Доставка и оплата</a>
+                    <a href="#">Возврат</a>
+                    <a href="#">Отзывы</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Мастерам</h4>
+                    <a href="#" class="footer-highlight">Стать партнёром</a>
+                    <a href="#">Условия сотрудничества</a>
+                    <a href="#">Как мы работаем</a>
+                    <a href="#">Примеры проектов</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Контакты</h4>
+                    <a href="mailto:info@woodinrub.ru">info@woodinrub.ru</a>
+                    <a href="tel:+79001234567">+7 (900) 123-45-67</a>
+                    <p style="color: var(--text-gray); font-size: 13px; margin-top: 8px">Работаем по всей России</p>
+                    <div class="footer-subscribe">
+                        <p style="font-size: 13px; color: var(--text-gray); margin-top: 12px;">Подпишитесь на новинки</p>
+                        <form class="subscribe-form">
+                            <input type="email" placeholder="Ваш email" required />
+                            <button type="submit">→</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 WOODINRUB. Все права защищены.</span>
+                <div class="footer-legal">
+                    <a href="#">Политика конфиденциальности</a>
+                    <a href="#">Пользовательское соглашение</a>
+                    <a href="#">Оферта для мастеров</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+<script src="/js/api.js"></script>
+<script src="/js/products.js"></script>
+
+</body>
+</html>

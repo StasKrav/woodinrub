@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Мастера — WoodInRub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+    	/* ===== КАРТОЧКА МАСТЕРА (общие стили) ===== */
+    	.master-card-square {
+    	    display: flex;
+    	    flex-direction: column;
+    	    align-items: center;
+    	    background: var(--bg-card);
+    	    border-radius: var(--radius-sm);
+    	    padding: 24px 18px 20px;
+    	    border: 1px solid var(--border-dark);
+    	    transition: var(--transition);
+    	    text-decoration: none;
+    	    color: var(--text-white);
+    	    text-align: center;
+    	    aspect-ratio: 1 / 1;
+    	    justify-content: center;
+    	}
+    	.master-card-square:hover {
+    	    border-color: var(--accent);
+    	    transform: translateY(-4px);
+    	    box-shadow: var(--accent-glow);
+    	}
+    	
+    	/* На мобильных убираем квадратность и делаем горизонтальной */
+    	@media (max-width: 768px) {
+    	    .master-card-square {
+    	        aspect-ratio: auto;
+    	        flex-direction: row;
+    	        align-items: center;
+    	        text-align: left;
+    	        padding: 16px 18px;
+    	        min-height: 120px;
+    	        gap: 16px;
+    	        justify-content: flex-start;
+    	        width: 100%;
+    	    }
+    	    .master-card-square .avatar {
+    	        margin-bottom: 0;
+    	        width: 70px;
+    	        height: 70px;
+    	        flex-shrink: 0;
+    	    }
+    	    .master-card-square .info-wrap {
+    	        display: flex;
+    	        flex-direction: column;
+    	        flex: 1;
+    	        min-width: 0;
+    	    }
+    	}
+    	
+        /* ===== СТРАНИЦА МАСТЕРОВ ===== */
+        .masters-page-title {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 700;
+            margin: 30px 0 4px;
+        }
+        .masters-page-sub {
+            color: var(--text-gray);
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+
+        /* ===== СЕТКА КВАДРАТНЫХ КАРТОЧЕК ===== */
+        .masters-grid-full {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        /* ===== КАРТОЧКА МАСТЕРА (квадратная, компактная) ===== */
+        .master-card-square {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: var(--bg-card);
+            border-radius: var(--radius-sm);
+            padding: 24px 18px 20px;
+            border: 1px solid var(--border-dark);
+            transition: var(--transition);
+            text-decoration: none;
+            color: var(--text-white);
+            text-align: center;
+            aspect-ratio: 1 / 1;
+            justify-content: center;
+        }
+        .master-card-square:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: var(--accent-glow);
+        }
+
+        .master-card-square .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 2px solid var(--border-dark);
+            transition: var(--transition);
+            background: #2a2a2a;
+            margin-bottom: 12px;
+        }
+        .master-card-square .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .master-card-square:hover .avatar {
+            border-color: var(--accent);
+        }
+
+        .master-card-square .name {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 2px;
+            line-height: 1.2;
+        }
+        .master-card-square .title {
+            font-size: 12px;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+        .master-card-square .badge {
+            display: inline-block;
+            background: var(--accent);
+            color: #0a0a0a;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 2px 12px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 6px;
+        }
+
+        .master-card-square .stats {
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            color: var(--text-gray);
+            margin-top: 6px;
+        }
+        .master-card-square .stats strong {
+            color: var(--text-white);
+            font-weight: 600;
+        }
+
+        .master-card-square .extra-compact {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 4px 10px;
+            font-size: 11px;
+            color: var(--text-dark-gray);
+            margin-top: 6px;
+        }
+        .master-card-square .extra-compact span {
+            white-space: nowrap;
+        }
+
+        .master-card-square .materials-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-gray);
+            font-size: 9px;
+            padding: 1px 10px;
+            border-radius: 40px;
+            border: 1px solid var(--border-dark);
+        }
+
+        /* ===== АДАПТАЦИЯ ПОД ТЕЛЕФОНЫ ===== */
+        @media (max-width: 768px) {
+            .masters-grid-full {
+                grid-template-columns: 1fr; /* Одна колонка на всю ширину */
+                gap: 16px;
+                padding: 0 4px;
+            }
+        
+            .master-card-square {
+                flex-direction: row;
+                align-items: center;
+                text-align: left;
+                aspect-ratio: auto; /* Убираем квадратность */
+                padding: 16px 18px;
+                min-height: 120px;
+                gap: 16px;
+                justify-content: flex-start;
+                width: 100%;
+            }
+        
+            .master-card-square .avatar {
+                width: 70px;
+                height: 70px;
+                flex-shrink: 0;
+                margin-bottom: 0;
+            }
+        
+            .master-card-square .info-wrap {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+                min-width: 0;
+            }
+        
+            .master-card-square .name {
+                font-size: 16px;
+                margin-bottom: 0;
+            }
+        
+            .master-card-square .title {
+                font-size: 12px;
+            }
+        
+            .master-card-square .badge {
+                font-size: 9px;
+                padding: 1px 10px;
+                display: inline-block;
+                width: fit-content;
+            }
+        
+            .master-card-square .extra-compact {
+                font-size: 11px;
+                gap: 4px 8px;
+                justify-content: flex-start;
+                margin-top: 2px;
+            }
+        
+            .master-card-square .stats {
+                font-size: 12px;
+                gap: 14px;
+                margin-top: 2px;
+            }
+        
+            .master-card-square .materials-tag {
+                font-size: 9px;
+                padding: 1px 10px;
+            }
+        
+            /* Заголовок страницы */
+            .masters-page-title {
+                font-size: 26px;
+                margin-top: 20px;
+            }
+            .masters-page-sub {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .master-card-square {
+                padding: 12px 14px;
+                min-height: 100px;
+                gap: 12px;
+            }
+        
+            .master-card-square .avatar {
+                width: 56px;
+                height: 56px;
+            }
+        
+            .master-card-square .name {
+                font-size: 15px;
+            }
+        
+            .master-card-square .title {
+                font-size: 11px;
+            }
+        
+            .master-card-square .extra-compact {
+                font-size: 10px;
+            }
+        
+            .master-card-square .stats {
+                font-size: 11px;
+                gap: 10px;
+            }
+        
+            .master-card-square .materials-tag {
+                font-size: 8px;
+                padding: 1px 8px;
+            }
+        
+            .masters-page-title {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- ===== ШАПКА ===== -->
+        <header class="header">
+            <a href="/" class="logo">
+                <span class="wood">wood</span><span class="in">in</span><span class="rub">rub</span>
+                <small>Пермь</small>
+            </a>
+            <nav class="nav">
+                <a href="/masters/">Мастера</a>
+                <a href="/catalog/">Изделия</a>
+                <a href="/studios/">Студии</a>
+                <a href="/blog/">Блог</a>
+            </nav>
+            <div class="header-actions">
+                <a href="/login/">Войти</a>
+                <a href="/cart/">
+                    Корзина
+                    <span class="cart-badge">0</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- ===== ЗАГОЛОВОК ===== -->
+        <h1 class="masters-page-title">Наши мастера</h1>
+        <p class="masters-page-sub">
+            Проверенные столяры, краснодеревщики и дизайнеры
+        </p>
+
+        <!-- ===== СЕТКА МАСТЕРОВ ===== -->
+        <div class="masters-grid-full" id="mastersList"></div>
+
+        <!-- ===== ПОДВАЛ ===== -->
+        <footer class="footer">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="/" class="logo" style="font-size: 24px">
+                        <span class="wood">wood</span><span class="in">in</span><span class="rub">rub</span>
+                    </a>
+                    <p class="footer-desc">
+                        Представляю работы лучших мастеров. Беру на себя фото, описание,
+                        общение с клиентами и рекламу.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Instagram">Instagram</a>
+                        <a href="#" aria-label="YouTube">YouTube</a>
+                        <a href="#" aria-label="Telegram">Telegram</a>
+                        <a href="#" aria-label="VK">VK</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Покупателям</h4>
+                    <a href="/catalog/">Каталог</a>
+                    <a href="#">Доставка и оплата</a>
+                    <a href="#">Возврат</a>
+                    <a href="#">Отзывы</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Мастерам</h4>
+                    <a href="#" class="footer-highlight">Стать партнёром</a>
+                    <a href="#">Условия сотрудничества</a>
+                    <a href="#">Как мы работаем</a>
+                    <a href="#">Примеры проектов</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Контакты</h4>
+                    <a href="mailto:info@woodinrub.ru">info@woodinrub.ru</a>
+                    <a href="tel:+79001234567">+7 (900) 123-45-67</a>
+                    <p style="color: var(--text-gray); font-size: 13px; margin-top: 8px">Работаем по всей России</p>
+                    <div class="footer-subscribe">
+                        <p style="font-size: 13px; color: var(--text-gray); margin-top: 12px;">Подпишитесь на новинки</p>
+                        <form class="subscribe-form">
+                            <input type="email" placeholder="Ваш email" required />
+                            <button type="submit">→</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 WOODINRUB. Все права защищены.</span>
+                <div class="footer-legal">
+                    <a href="#">Политика конфиденциальности</a>
+                    <a href="#">Пользовательское соглашение</a>
+                    <a href="#">Оферта для мастеров</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script src="/js/api.js"></script>
+    <script>
+        // ============================================================
+        // РЕНДЕРИНГ КВАДРАТНЫХ КАРТОЧЕК МАСТЕРОВ
+        // ============================================================
+
+        async function renderMastersGrid() {
+            const container = document.getElementById('mastersList');
+            if (!container) return;
+
+            try {
+                const response = await fetch('http://localhost:3000/api/masters');
+                const masters = await response.json();
+
+                if (masters.length === 0) {
+                    container.innerHTML = '<p style="color: var(--text-gray); text-align: center;">Пока нет мастеров. Приходите позже!</p>';
+                    return;
+                }
+
+                container.innerHTML = masters.map(master => {
+                    const avatarUrl = `http://localhost:3000${master.avatar || '/images/placeholder.jpg'}`;
+                    const extra = master.extra_data || {};
+                
+                    let extraParts = [];
+                    if (extra.city) extraParts.push(extra.city);
+                    if (extra.experience) extraParts.push(`${extra.experience} лет`);
+                    if (extra.style) extraParts.push(extra.style);
+                    const extraText = extraParts.join(' · ');
+                
+                    const materials = extra.materials && Array.isArray(extra.materials)
+                        ? extra.materials.slice(0, 3).map(m => `<span class="materials-tag">${m}</span>`).join(' ')
+                        : '';
+                
+                    return `
+                        <a href="/masters/${master.slug}/" class="master-card-square">
+                            <div class="avatar">
+                                <img src="${avatarUrl}" alt="${master.name}" loading="lazy" />
+                            </div>
+                            <div class="info-wrap">
+                                <div class="name">${master.name}</div>
+                                ${master.badge ? `<div class="badge">${master.badge}</div>` : ''}
+                                <div class="title">${master.title || ''}</div>
+                                ${extraText ? `<div class="extra-compact"><span>${extraText}</span></div>` : ''}
+                                ${materials ? `<div class="extra-compact">${materials}</div>` : ''}
+                                <div class="stats">
+                                    <span>Работ: <strong>${master.works_count || 0}</strong></span>
+                                    <span>★ <strong>${master.rating || '0.0'}</strong></span>
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                }).join('');
+
+            } catch (error) {
+                console.error('Ошибка загрузки мастеров:', error);
+                container.innerHTML = '<p style="color: var(--text-gray); text-align: center;">Не удалось загрузить мастеров. Попробуйте позже.</p>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', renderMastersGrid);
+    </script>
+</body>
+</html>
