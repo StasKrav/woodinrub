@@ -9,10 +9,15 @@ async function loadComponent(selector, url) {
         const html = await response.text();
         document.querySelector(selector).innerHTML = html;
         
-        // 👇 После загрузки шапки обновляем бейджик
+        // 👇 После загрузки шапки
         if (selector === '#header-placeholder') {
+            // Обновляем счётчик корзины
             if (typeof updateCartBadge === 'function') {
-                updateCartBadge();
+                setTimeout(updateCartBadge, 50);
+            }
+            // Инициализируем модалку
+            if (typeof initModal === 'function') {
+                setTimeout(initModal, 50);
             }
         }
     } catch (error) {

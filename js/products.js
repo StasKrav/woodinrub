@@ -8,7 +8,7 @@ function createProductCard(product) {
     const imageUrl = `http://localhost:3000${product.image}`;
 
     return `
-        <div class="product-card" data-product-id="${product.id}">
+            <div class="product-card" data-product-id="${product.id}" data-product-slug="${product.slug}">
             <div class="product-image">
                 <img src="${imageUrl}" alt="${product.name}" loading="lazy" />
                 ${product.badge ? `<div class="badge">${product.badge}</div>` : ''}

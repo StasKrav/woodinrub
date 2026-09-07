@@ -213,6 +213,11 @@ app.get('/cart', (req, res) => {
     res.sendFile(path.join(__dirname, '../cart/index.html'));
 });
 
+// Страница каталога
+app.get('/catalog', (req, res) => {
+    res.sendFile(path.join(__dirname, '../catalog/index.html'));
+});
+
 // ============================================================
 // API: ОФОРМЛЕНИЕ ЗАКАЗА
 // ============================================================

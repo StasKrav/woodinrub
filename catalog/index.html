@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Изделия — WoodInRub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+        .catalog-title {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 700;
+            margin: 30px 0 4px;
+        }
+        .catalog-sub {
+            color: var(--text-gray);
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 24px;
+            margin-bottom: 50px;
+        }
+        @media (max-width: 640px) {
+            .catalog-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 14px;
+            }
+        }
+        @media (max-width: 440px) {
+            .catalog-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ШАПКА -->
+        <div id="header-placeholder"></div>
+
+        <!-- ЗАГОЛОВОК -->
+        <h1 class="catalog-title">Все изделия</h1>
+        <p class="catalog-sub">Авторские работы от лучших мастеров</p>
+
+        <!-- КАТАЛОГ -->
+        <div class="catalog-grid" id="catalogContainer"></div>
+
+        <!-- ФУТЕР -->
+        <div id="footer-placeholder"></div>
+    </div>
+
+    <!-- ===== СКРИПТЫ ===== -->
+    <script src="/js/api.js"></script>
+    <script src="/js/components.js"></script>
+    <script src="/js/products.js"></script>
+    <script src="/js/cart.js"></script>
+    <script src="/js/modal.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('catalogContainer');
+            if (!container) return;
+
+            getProducts().then(products => {
+                container.innerHTML = products.map(createProductCard).join('');
+                // 👇 Инициализируем модалку ПОСЛЕ рендеринга
+                if (typeof initModal === 'function') {
+                    setTimeout(initModal, 50);
+                }
+            }).catch(err => {
+                container.innerHTML = '<p style="color: var(--text-gray);">Не удалось загрузить товары</p>';
+                console.error(err);
+            });
+        });
+    </script>
+</body>
+</html>
