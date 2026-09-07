@@ -29,6 +29,8 @@ app.use('/masters', express.static(path.join(__dirname, '../masters')));
 app.use('/js', express.static(path.join(__dirname, '../js')));
 app.use('/css', express.static(path.join(__dirname, '../css')));
 app.use('/images', express.static(path.join(__dirname, '../images')));
+// Раздаём статику из папки components
+app.use('/components', express.static(path.join(__dirname, '../components')));
 
 // 👇 РАЗДАЁМ HTML (чтобы index.html открывался по /)
 app.get('/', (req, res) => {
