@@ -207,6 +207,65 @@ app.get('/masters', (req, res) => {
     res.sendFile(path.join(__dirname, '../masters/index.html'));
 });
 
+// Страница корзины
+app.get('/cart', (req, res) => {
+    res.sendFile(path.join(__dirname, '../cart/index.html'));
+});
+
+// ============================================================
+// API: ОФОРМЛЕНИЕ ЗАКАЗА
+// ============================================================
+app.post('/api/orders', async (req, res) => {
+    try {
+        const { items, customerName, customerPhone, customerEmail, deliveryAddress, comment, total } = req.body;
+        
+        if (!items || items.length === 0) {
+            return res.status(400).json({ error: 'Корзина пуста' });
+        }
+        
+        if (!customerName || !customerPhone) {
+            return res.status(400).json({ error: 'Имя и телефон обязательны' });
+        }
+        
+        // Генерируем номер заказа
+        const orderNumber = 'ORD-' + Date.now().toString().slice(-8) + '-' + Math.random().toString(36).slice(2, 6).toUpperCase();
+        
+        // Сохраняем заказ в БД
+        const result = await pool.query(`
+            INSERT INTO orders (
+                order_number, customer_name, customer_phone, customer_email,
+                delivery_address, comment, total_amount, status, created_at
+            )
+            VALUES ($1, $2, $3, $4, $5, $6, $7, 'new', NOW())
+            RETURNING id
+        `, [orderNumber, customerName, customerPhone, customerEmail, deliveryAddress, comment, total]);
+        
+        const orderId = result.rows[0].id;
+        
+        // Сохраняем товары в order_items
+        for (const item of items) {
+            await pool.query(`
+                INSERT INTO order_items (order_id, product_id, product_name, price, quantity)
+                VALUES ($1, $2, $3, $4, $5)
+            `, [orderId, item.id, item.name, item.price, item.quantity]);
+        }
+        
+        // Здесь можно отправить уведомление на email/telegram
+        
+        res.json({
+            success: true,
+            orderNumber: orderNumber,
+            message: 'Заказ оформлен'
+        });
+        
+    } catch (err) {
+        console.error('Ошибка при оформлении заказа:', err);
+        res.status(500).json({ error: 'Ошибка при оформлении заказа' });
+    }
+});
+
+
+
 // ============================================================
 // ЗАПУСК СЕРВЕРА
 // ============================================================

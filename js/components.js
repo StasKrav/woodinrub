@@ -8,6 +8,13 @@ async function loadComponent(selector, url) {
         if (!response.ok) throw new Error(`Ошибка загрузки ${url}`);
         const html = await response.text();
         document.querySelector(selector).innerHTML = html;
+        
+        // 👇 После загрузки шапки обновляем бейджик
+        if (selector === '#header-placeholder') {
+            if (typeof updateCartBadge === 'function') {
+                updateCartBadge();
+            }
+        }
     } catch (error) {
         console.error(`❌ Ошибка загрузки компонента ${url}:`, error);
     }
