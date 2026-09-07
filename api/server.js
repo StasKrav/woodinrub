@@ -1,3 +1,4 @@
+const { sendOrderEmail } = require('./mailer');
 const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');
@@ -242,7 +243,7 @@ app.post('/api/orders', async (req, res) => {
         
         const orderId = result.rows[0].id;
         
-        // Сохраняем товары в order_items
+        // Сохраняем товары
         for (const item of items) {
             await pool.query(`
                 INSERT INTO order_items (order_id, product_id, product_name, price, quantity)
@@ -250,7 +251,21 @@ app.post('/api/orders', async (req, res) => {
             `, [orderId, item.id, item.name, item.price, item.quantity]);
         }
         
-        // Здесь можно отправить уведомление на email/telegram
+        // 📧 Отправляем письмо
+        try {
+            await sendOrderEmail({
+                orderNumber,
+                customerName,
+                customerPhone,
+                customerEmail,
+                deliveryAddress,
+                comment,
+                items,
+                total
+            });
+        } catch (emailError) {
+            console.error('❌ Ошибка отправки письма:', emailError);
+        }
         
         res.json({
             success: true,
