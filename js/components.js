@@ -17,13 +17,13 @@ async function loadComponent(selector, url) {
 // ЗАГРУЖАЕМ ВСЕ КОМПОНЕНТЫ ПРИ ЗАГРУЗКЕ СТРАНИЦЫ
 // ============================================================
 document.addEventListener('DOMContentLoaded', function() {
+    // Шапка
+    if (document.querySelector('#header-placeholder')) {
+        loadComponent('#header-placeholder', '/components/header.html');
+    }
+    
     // Футер
     if (document.querySelector('#footer-placeholder')) {
         loadComponent('#footer-placeholder', '/components/footer.html');
-    }
-    
-    // Шапка (если будем делать отдельно)
-    if (document.querySelector('#header-placeholder')) {
-        loadComponent('#header-placeholder', '/components/header.html');
     }
 });

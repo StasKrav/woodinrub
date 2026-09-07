@@ -20,27 +20,11 @@
 
   <body>
     <div class="container">
-      <!-- ===== ШАПКА ===== -->
-      <header class="header">
-        <a href="#" class="logo">
-          <span class="wood">wood</span><span class="in">in</span><span class="rub">rub</span>
-          <small>Пермь</small>
-        </a>
-        <nav class="nav">
-            <a href="/masters/">Мастера</a>
-            <a href="/catalog/">Изделия</a>
-            <a href="/studios/">Студии</a>
-            <a href="/blog/">Блог</a>
-        </nav>
-        <div class="header-actions">
-          <a href="#">Войти</a>
-          <a href="#">
-            Корзина
-            <span class="cart-badge">4</span>
-          </a>
-        </div>
-      </header>
 
+      <!-- ===== ШАПКА ===== -->
+      <div id="header-placeholder"></div>
+
+      
       <!-- ===== ГЕРОЙ ===== -->
       <section class="hero">
           <div class="hero-content">
@@ -67,7 +51,7 @@
       <p class="section-sub">
         Работаю с проверенными студиями и частными краснодеревщиками
       </p>
-<div class="masters-grid" id="mastersContainer"></div>
+	  <div class="masters-grid" id="mastersContainer"></div>
 
 
       <!-- ===== ТОВАРЫ С ПРИВЯЗКОЙ К МАСТЕРУ ===== -->
@@ -80,7 +64,9 @@
 
 
       <div class="products-grid" id="productsContainer"></div>
-<div id="footer-placeholder"></div>
+
+      <!-- ===== ПОДВАЛ ===== -->
+	<div id="footer-placeholder"></div>
 
 <script src="/js/api.js"></script>
 <script src="/js/products.js"></script>
@@ -89,3 +75,4 @@
     
 </body>
 </html>
+
