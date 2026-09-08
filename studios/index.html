@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Студии — WoodInRub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+        .studios-page-title {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 700;
+            margin: 30px 0 4px;
+        }
+        .studios-page-sub {
+            color: var(--text-gray);
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+        .studios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 24px;
+            margin-bottom: 50px;
+        }
+        @media (max-width: 640px) {
+            .studios-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 14px;
+            }
+        }
+        @media (max-width: 440px) {
+            .studios-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ШАПКА -->
+        <div id="header-placeholder"></div>
+
+        <!-- ЗАГОЛОВОК -->
+        <h1 class="studios-page-title">Студии и мастерские</h1>
+        <p class="studios-page-sub">Коллективы профессионалов, работающих вместе над сложными проектами</p>
+
+        <!-- СТУДИИ -->
+        <div class="studios-grid" id="studiosContainer"></div>
+
+        <!-- ФУТЕР -->
+        <div id="footer-placeholder"></div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/components.js"></script>
+    <script src="/js/studios.js"></script>
+</body>
+</html>

@@ -2,9 +2,6 @@ const { Pool } = require('pg');
 const fs = require('fs');
 const path = require('path');
 
-// ============================================================
-// ПОДКЛЮЧЕНИЕ К БАЗЕ
-// ============================================================
 const pool = new Pool({
     user: 'woodinrub_user',
     host: 'localhost',
@@ -13,14 +10,8 @@ const pool = new Pool({
     port: 5432,
 });
 
-// ============================================================
-// ПУТЬ К ПАПКЕ С МАСТЕРАМИ
-// ============================================================
 const MASTERS_DIR = path.join(__dirname, '../masters');
 
-// ============================================================
-// ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
-// ============================================================
 function readJsonFile(filePath) {
     try {
         if (fs.existsSync(filePath)) {
@@ -42,6 +33,7 @@ function getDefaultMasterInfo(slug) {
         bio: 'Описание мастера (добавьте info.json в папку)',
         badge: '★ Мастер',
         rating: 0,
+        type: 'individual',
         extra_data: {
             city: null,
             experience: null,
@@ -66,14 +58,10 @@ function getDefaultProductInfo(slug) {
     };
 }
 
-// ============================================================
-// ОСНОВНАЯ ФУНКЦИЯ СИНХРОНИЗАЦИИ
-// ============================================================
 async function sync() {
     console.log('🔄 Начинаю синхронизацию...');
     console.log('📁 Путь к мастерам:', MASTERS_DIR);
     
-    // 1. Читаем папки мастеров
     if (!fs.existsSync(MASTERS_DIR)) {
         console.error('❌ Папка masters не найдена!');
         process.exit(1);
@@ -85,23 +73,19 @@ async function sync() {
 
     console.log(`📁 Найдено папок мастеров: ${masterFolders.length}`);
 
-    if (masterFolders.length === 0) {
-        console.log('⚠️ Нет мастеров для синхронизации');
-        process.exit(0);
-    }
-
     for (const slug of masterFolders) {
         const masterPath = path.join(MASTERS_DIR, slug);
         const infoPath = path.join(masterPath, 'info.json');
         
-        // Читаем info.json мастера
         let masterInfo = readJsonFile(infoPath);
         if (!masterInfo) {
-            console.log(`ℹ️ info.json не найден для ${slug}, использую значения по умолчанию`);
+            console.log(`ℹ️ info.json не найден для ${slug}`);
             masterInfo = getDefaultMasterInfo(slug);
         }
 
-        // Собираем extra_data
+        const masterType = masterInfo.type || 'individual';
+        console.log(`🔍 ${slug}: type = "${masterType}"`);
+
         const extraData = {
             city: masterInfo.city || masterInfo.extra_data?.city || null,
             experience: masterInfo.experience || masterInfo.extra_data?.experience || null,
@@ -113,25 +97,19 @@ async function sync() {
             phone: masterInfo.phone || masterInfo.extra_data?.phone || null
         };
 
-        // Проверяем, есть ли мастер в БД
         const masterRes = await pool.query('SELECT id FROM masters WHERE slug = $1', [slug]);
         
         let masterId;
         if (masterRes.rows.length === 0) {
-            // --- НОВЫЙ МАСТЕР ---
             const productsPath = path.join(masterPath, 'products');
             if (!fs.existsSync(productsPath)) {
                 fs.mkdirSync(productsPath, { recursive: true });
-                console.log(`📁 Создана папка products для ${slug}`);
             }
 
-            console.log(`✨ Добавляю мастера: ${slug}`);
+            console.log(`✨ Добавляю мастера: ${slug} (${masterType})`);
             const result = await pool.query(`
-                INSERT INTO masters (
-                    slug, name, short_name, title, bio, badge, 
-                    rating, works_count, extra_data
-                )
-                VALUES ($1, $2, $3, $4, $5, $6, $7, 0, $8)
+                INSERT INTO masters (slug, name, short_name, title, bio, badge, rating, works_count, extra_data, type)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, 0, $8, $9)
                 RETURNING id
             `, [
                 slug,
@@ -141,25 +119,19 @@ async function sync() {
                 masterInfo.bio || getDefaultMasterInfo(slug).bio,
                 masterInfo.badge || getDefaultMasterInfo(slug).badge,
                 masterInfo.rating || 0,
-                JSON.stringify(extraData)
+                JSON.stringify(extraData),
+                masterType
             ]);
             masterId = result.rows[0].id;
             console.log(`✅ Мастер ${slug} добавлен с ID: ${masterId}`);
         } else {
             masterId = masterRes.rows[0].id;
-            
-            // --- ОБНОВЛЕНИЕ СУЩЕСТВУЮЩЕГО МАСТЕРА ---
-            console.log(`🔄 Обновляю мастера: ${slug}`);
+            console.log(`🔄 Обновляю мастера: ${slug} (${masterType})`);
             await pool.query(`
                 UPDATE masters SET
-                    name = $1,
-                    short_name = $2,
-                    title = $3,
-                    bio = $4,
-                    badge = $5,
-                    rating = $6,
-                    extra_data = $7
-                WHERE id = $8
+                    name = $1, short_name = $2, title = $3, bio = $4,
+                    badge = $5, rating = $6, extra_data = $7, type = $8
+                WHERE id = $9
             `, [
                 masterInfo.name || getDefaultMasterInfo(slug).name,
                 masterInfo.short_name || getDefaultMasterInfo(slug).short_name,
@@ -168,12 +140,13 @@ async function sync() {
                 masterInfo.badge || getDefaultMasterInfo(slug).badge,
                 masterInfo.rating || 0,
                 JSON.stringify(extraData),
+                masterType,
                 masterId
             ]);
             console.log(`✅ Мастер ${slug} обновлён`);
         }
 
-        // --- 3. СИНХРОНИЗАЦИЯ ТОВАРОВ ---
+        // --- СИНХРОНИЗАЦИЯ ТОВАРОВ ---
         const productsPath = path.join(masterPath, 'products');
         if (fs.existsSync(productsPath)) {
             const productFolders = fs.readdirSync(productsPath, { withFileTypes: true })
@@ -187,23 +160,49 @@ async function sync() {
                 const infoPath = path.join(productPath, 'info.json');
                 const imagePath = path.join(productPath, 'main.jpg');
                 
-                // Читаем info.json товара
                 let productInfo = readJsonFile(infoPath);
                 if (!productInfo) {
-                    console.log(`ℹ️ info.json не найден для ${productSlug}, использую значения по умолчанию`);
                     productInfo = getDefaultProductInfo(productSlug);
                 }
-
-                // Проверяем, есть ли товар в БД
-                const productRes = await pool.query(
-                    'SELECT id FROM products WHERE slug = $1 AND master_id = $2',
-                    [productSlug, masterId]
-                );
 
                 const imageExists = fs.existsSync(imagePath);
                 const imagePathForDb = imageExists ? `/masters/${slug}/products/${productSlug}/main.jpg` : null;
 
-                if (productRes.rows.length === 0) {
+                // 👇 ПРОВЕРЯЕМ, ЕСТЬ ЛИ ТОВАР
+                const existingProduct = await pool.query(
+                    'SELECT id, master_id FROM products WHERE slug = $1',
+                    [productSlug]
+                );
+
+                if (existingProduct.rows.length > 0) {
+                    // --- ОБНОВЛЯЕМ СУЩЕСТВУЮЩИЙ ТОВАР ---
+                    console.log(`🔄 Обновляю товар: ${productSlug}`);
+                    await pool.query(`
+                        UPDATE products SET
+                            master_id = $1,
+                            name = $2,
+                            description = $3,
+                            price = $4,
+                            badge = $5,
+                            rating = $6,
+                            meta_data = $7::jsonb,
+                            image = $8,
+                            is_active = true,
+                            updated_at = NOW()
+                        WHERE slug = $9
+                    `, [
+                        masterId,
+                        productInfo.name || getDefaultProductInfo(productSlug).name,
+                        productInfo.description || getDefaultProductInfo(productSlug).description,
+                        productInfo.price || getDefaultProductInfo(productSlug).price,
+                        productInfo.badge || null,
+                        productInfo.rating || getDefaultProductInfo(productSlug).rating,
+                        JSON.stringify(productInfo.meta_data || []),
+                        imagePathForDb,
+                        productSlug
+                    ]);
+                    console.log(`✅ Товар ${productSlug} обновлён`);
+                } else {
                     // --- НОВЫЙ ТОВАР ---
                     console.log(`🆕 Добавляю товар: ${productSlug}`);
                     await pool.query(`
@@ -224,37 +223,11 @@ async function sync() {
                         imagePathForDb
                     ]);
                     console.log(`✅ Товар ${productSlug} добавлен`);
-                } else {
-                    // --- ОБНОВЛЕНИЕ СУЩЕСТВУЮЩЕГО ТОВАРА ---
-                    console.log(`🔄 Обновляю товар: ${productSlug}`);
-                    await pool.query(`
-                        UPDATE products SET
-                            name = $1,
-                            description = $2,
-                            price = $3,
-                            badge = $4,
-                            rating = $5,
-                            meta_data = $6::jsonb,
-                            image = $7
-                        WHERE slug = $8 AND master_id = $9
-                    `, [
-                        productInfo.name || getDefaultProductInfo(productSlug).name,
-                        productInfo.description || getDefaultProductInfo(productSlug).description,
-                        productInfo.price || getDefaultProductInfo(productSlug).price,
-                        productInfo.badge || null,
-                        productInfo.rating || getDefaultProductInfo(productSlug).rating,
-                        JSON.stringify(productInfo.meta_data || []),
-                        imagePathForDb,
-                        productSlug,
-                        masterId
-                    ]);
-                    console.log(`✅ Товар ${productSlug} обновлён`);
                 }
             }
         }
     }
 
-    // --- 4. ОБНОВЛЯЕМ works_count ДЛЯ ВСЕХ МАСТЕРОВ ---
     console.log('📊 Обновляю количество работ...');
     await pool.query(`
         UPDATE masters 
@@ -266,9 +239,6 @@ async function sync() {
     process.exit(0);
 }
 
-// ============================================================
-// ЗАПУСК
-// ============================================================
 sync().catch(err => {
     console.error('❌ Ошибка синхронизации:', err);
     process.exit(1);

@@ -105,19 +105,30 @@ app.get('/api/products/:slug', async (req, res) => {
 });
 
 // ============================================================
-// API: ПОЛУЧИТЬ ВСЕХ МАСТЕРОВ (с extra_data)
+// API: ПОЛУЧИТЬ ВСЕХ МАСТЕРОВ (с фильтром по типу)
 // ============================================================
 app.get('/api/masters', async (req, res) => {
     try {
-        const result = await pool.query(`
+        const { type } = req.query;
+        
+        let query = `
             SELECT 
                 id, slug, name, short_name, title, bio, badge, 
-                rating, works_count, extra_data, created_at,
+                rating, works_count, extra_data, created_at, type,
                 CONCAT('/masters/', slug, '/avatar.jpg') as avatar
             FROM masters 
-            WHERE is_active = true 
-            ORDER BY works_count DESC
-        `);
+            WHERE is_active = true
+        `;
+        const params = [];
+        
+        if (type) {
+            query += ` AND type = $1`;
+            params.push(type);
+        }
+        
+        query += ` ORDER BY works_count DESC`;
+        
+        const result = await pool.query(query, params);
         res.json(result.rows);
     } catch (err) {
         console.error(err);
@@ -216,6 +227,16 @@ app.get('/cart', (req, res) => {
 // Страница каталога
 app.get('/catalog', (req, res) => {
     res.sendFile(path.join(__dirname, '../catalog/index.html'));
+});
+
+// Страница студий
+app.get('/studios', (req, res) => {
+    res.sendFile(path.join(__dirname, '../studios/index.html'));
+});
+
+// Страница блога
+app.get('/blog', (req, res) => {
+    res.sendFile(path.join(__dirname, '../blog/index.html'));
 });
 
 // ============================================================

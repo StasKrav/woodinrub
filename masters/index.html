@@ -336,7 +336,7 @@
         if (!container) return;
 
         try {
-          const response = await fetch("http://localhost:3000/api/masters");
+          const response = await fetch('http://localhost:3000/api/masters?type=individual');
           const masters = await response.json();
 
           if (masters.length === 0) {

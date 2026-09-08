@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Блог — WoodInRub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+        .blog-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 50vh;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .blog-icon {
+            font-size: 72px;
+            margin-bottom: 24px;
+            opacity: 0.6;
+        }
+
+        .blog-title {
+            font-family: var(--font-display);
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .blog-sub {
+            color: var(--text-gray);
+            font-size: 18px;
+            max-width: 560px;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .blog-note {
+            color: var(--text-dark-gray);
+            font-size: 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-dark);
+            padding: 12px 28px;
+            border-radius: var(--radius-sm);
+            margin-top: 16px;
+            display: inline-block;
+        }
+
+        .blog-note strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .blog-decoration {
+            margin-top: 32px;
+            display: flex;
+            gap: 20px;
+            font-size: 24px;
+            opacity: 0.3;
+            letter-spacing: 8px;
+        }
+
+        @media (max-width: 640px) {
+            .blog-title {
+                font-size: 28px;
+            }
+            .blog-sub {
+                font-size: 16px;
+            }
+            .blog-icon {
+                font-size: 52px;
+            }
+            .blog-wrapper {
+                padding: 40px 16px;
+                min-height: 40vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <!-- ===== ШАПКА ===== -->
+        <div id="header-placeholder"></div>
+
+        <!-- ===== БЛОГ ===== -->
+        <div class="blog-wrapper">
+            <div class="blog-icon">
+                <svg width="60" height="66" viewBox="0 0 296 328">
+                <path d="M116,276 L148,276" stroke="currentColor" stroke-width="8" fill="none" stroke-linecap="round"/>
+                <path d="M148,276 L244,180" stroke="currentColor" stroke-width="8" fill="none" stroke-linecap="round"/>
+                <path d="M276,308 L20,308 L20,20 L276,20 Z" stroke="currentColor" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M244,276 L180,276" stroke="currentColor" stroke-width="8" fill="none" stroke-linecap="round"/>
+                <path d="M116,276 L116,244" stroke="currentColor" stroke-width="8" fill="none" stroke-linecap="round"/>
+                <path d="M116,244 L212,148" stroke="currentColor" stroke-width="8" fill="none" stroke-linecap="round"/>
+                <path d="M212,148 L244,180" stroke="currentColor" stroke-width="8" fill="none" stroke-linecap="round"/>
+                <path d="M180,180 L212,212" stroke="currentColor" stroke-width="8" fill="none" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <h1 class="blog-title">Блог</h1>
+            <p class="blog-sub">
+                Здесь я буду делиться историями о создании мебели, секретами мастеров, 
+                обзорами инструментов и вдохновляющими проектами.
+            </p>
+            <p class="blog-sub" style="color: var(--text-dark-gray); font-size: 16px;">
+                Совсем скоро — первые статьи!
+            </p>
+            <div class="blog-note">
+                Страница в разработке · <strong>Следите за обновлениями</strong>
+            </div>
+            <div class="blog-decoration">
+                <span>✦</span>
+                <span>✦</span>
+                <span>✦</span>
+                <span>✦</span>
+                <span>✦</span>
+            </div>
+        </div>
+
+        <!-- ===== ФУТЕР ===== -->
+        <div id="footer-placeholder"></div>
+
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+</html>
