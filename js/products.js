@@ -13,7 +13,7 @@ function createProductCard(product) {
                 <img src="${imageUrl}" alt="${product.name}" loading="lazy" />
                 ${product.badge ? `<div class="badge">${product.badge}</div>` : ''}
                 <div class="master-tag">
-                    🪚 <strong>${masterShort}</strong>
+                    <strong>${masterShort}</strong>
                 </div>
             </div>
             <div class="product-info">
