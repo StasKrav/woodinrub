@@ -12,6 +12,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/modals.css">
     <link
       href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
@@ -34,7 +35,7 @@
                   нахожу качество.
               </p>
               <div class="btn-group">
-                  <a href="/masters/" class="btn btn-primary">Найти мастера</a>
+                  <a href="#" class="btn btn-primary btn-find-master">Найти мастера</a>
               </div>
           </div>
           <div class="hero-visual">
@@ -68,6 +69,75 @@
       <!-- ===== ПОДВАЛ ===== -->
 	<div id="footer-placeholder"></div>
 
+
+<!-- ===== МОДАЛКА ПОИСКА ===== -->
+<div class="modal-overlay" id="searchModal">
+    <div class="modal-content modal-search">
+        <button class="modal-close" id="closeSearchModal">✕</button>
+        <div class="modal-body">
+            <h2 class="search-title">Найти мастера</h2>
+            <p class="search-sub">Выберите критерии для поиска</p>
+            
+            <form class="search-form" id="searchForm">
+                <div class="search-fields">
+                    <!-- Поле: Имя мастера -->
+                    <div class="search-field">
+                        <label for="searchName">Имя или фамилия</label>
+                        <input type="text" id="searchName" placeholder="Например: Антон" />
+                    </div>
+
+                    <!-- Поле: Вид деятельности -->
+                    <div class="search-field">
+                        <label for="searchActivity">Вид деятельности</label>
+                        <select id="searchActivity">
+                            <option value="">Все направления</option>
+                            <option value="столяр">Столяр</option>
+                            <option value="краснодеревщик">Краснодеревщик</option>
+                            <option value="дизайнер">Дизайнер</option>
+                            <option value="резчик">Резчик по дереву</option>
+                            <option value="мебельщик">Мебельщик</option>
+                        </select>
+                    </div>
+
+                    <!-- Поле: Локация -->
+                    <div class="search-field">
+                        <label for="searchCity">Город</label>
+                        <input type="text" id="searchCity" placeholder="Например: Пермь" />
+                    </div>
+
+                    <!-- Поле: Тип мастера -->
+                    <div class="search-field">
+                        <label for="searchType">Тип</label>
+                        <select id="searchType">
+                            <option value="">Все</option>
+                            <option value="individual">Частный мастер</option>
+                            <option value="studio">Студия / Артель</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="search-actions">
+                    <button type="submit" class="btn btn-primary">Искать</button>
+                    <button type="reset" class="btn btn-outline" onclick="clearSearchForm()">Очистить</button>
+                </div>
+            </form>
+
+            <!-- Результаты поиска -->
+            <div id="searchResults" style="display: none;">
+                <h3>Результаты</h3>
+                <div id="searchResultsList"></div>
+            </div>
+            <div id="searchNoResults" style="display: none;">
+                <p style="color: var(--text-gray); text-align: center; padding: 20px 0;">
+                    Мастеров по вашему запросу не найдено.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <script src="/js/api.js"></script>
 <script src="/js/products.js"></script>
 <script src="/js/masters.js"></script>
@@ -75,17 +145,8 @@
 <script src="/js/cart.js"></script>
 <script src="/js/components.js"></script>
 <script src="/js/modal.js"></script>
+<script src="/js/search.js"></script>
 
-
-<!-- ===== МОДАЛКА ТОВАРА ===== -->
-<!-- <div class="modal-overlay" id="productModal"> -->
-<!--     <div class="modal-content"> -->
-<!--         <button class="modal-close" id="closeModal">✕</button> -->
-<!--         <div class="modal-body" id="modalBody"> -->
-<!--             <!-- Содержимое загружается через JS --> -->
-<!--         </div> -->
-<!--     </div> -->
-<!-- </div> -->
     
 </body>
 </html>

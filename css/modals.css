@@ -1,0 +1,151 @@
+/* ===== МОДАЛКА ПОИСКА ===== */
+.modal-search .modal-content {
+    max-width: 620px;
+}
+
+.search-title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.search-sub {
+    color: var(--text-gray);
+    font-size: 15px;
+    margin-bottom: 24px;
+}
+
+.search-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.search-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.search-field label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-gray);
+}
+
+.search-field input,
+.search-field select {
+    padding: 10px 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-dark);
+    border-radius: var(--radius-sm);
+    color: var(--text-white);
+    font-size: 14px;
+    font-family: var(--font-main);
+    transition: var(--transition);
+    width: 100%;
+}
+
+.search-field input:focus,
+.search-field select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.1);
+}
+
+.search-field select option {
+    background: var(--bg-dark);
+    color: var(--text-white);
+}
+
+.search-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.search-actions .btn {
+    flex: 1;
+    text-align: center;
+    min-width: 120px;
+}
+
+/* Результаты поиска */
+#searchResults h3 {
+    font-size: 18px;
+    margin: 20px 0 12px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-dark);
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 16px;
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-dark);
+    margin-bottom: 10px;
+    transition: var(--transition);
+    text-decoration: none;
+    color: var(--text-white);
+}
+
+.search-result-item:hover {
+    border-color: var(--accent);
+    transform: translateX(4px);
+}
+
+.search-result-item .avatar-small {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: #2a2a2a;
+}
+
+.search-result-item .avatar-small img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.search-result-item .info {
+    flex: 1;
+}
+
+.search-result-item .info .name {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.search-result-item .info .detail {
+    font-size: 13px;
+    color: var(--text-gray);
+}
+
+.search-result-item .badge-small {
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(255, 107, 53, 0.1);
+    padding: 2px 12px;
+    border-radius: 40px;
+    border: 1px solid rgba(255, 107, 53, 0.2);
+}
+
+@media (max-width: 640px) {
+    .modal-search .modal-content {
+        padding: 20px;
+        margin: 10px;
+    }
+    .search-title {
+        font-size: 22px;
+    }
+    .search-actions .btn {
+        flex: 1 1 100%;
+    }
+}
