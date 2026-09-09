@@ -1,17 +1,28 @@
+require('dotenv').config();
+
 const { Pool } = require('pg');
 const fs = require('fs');
 const path = require('path');
 
+// ============================================================
+// ПОДКЛЮЧЕНИЕ К БАЗЕ (из .env)
+// ============================================================
 const pool = new Pool({
-    user: 'woodinrub_user',
-    host: 'localhost',
-    database: 'woodinrub',
-    password: 'woodinrub_pass',
-    port: 5432,
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT || 5432,
 });
 
+// ============================================================
+// ПУТЬ К ПАПКЕ С МАСТЕРАМИ
+// ============================================================
 const MASTERS_DIR = path.join(__dirname, '../masters');
 
+// ============================================================
+// ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+// ============================================================
 function readJsonFile(filePath) {
     try {
         if (fs.existsSync(filePath)) {
@@ -58,6 +69,9 @@ function getDefaultProductInfo(slug) {
     };
 }
 
+// ============================================================
+// ОСНОВНАЯ ФУНКЦИЯ СИНХРОНИЗАЦИИ
+// ============================================================
 async function sync() {
     console.log('🔄 Начинаю синхронизацию...');
     console.log('📁 Путь к мастерам:', MASTERS_DIR);
@@ -73,13 +87,18 @@ async function sync() {
 
     console.log(`📁 Найдено папок мастеров: ${masterFolders.length}`);
 
+    if (masterFolders.length === 0) {
+        console.log('⚠️ Нет мастеров для синхронизации');
+        process.exit(0);
+    }
+
     for (const slug of masterFolders) {
         const masterPath = path.join(MASTERS_DIR, slug);
         const infoPath = path.join(masterPath, 'info.json');
         
         let masterInfo = readJsonFile(infoPath);
         if (!masterInfo) {
-            console.log(`ℹ️ info.json не найден для ${slug}`);
+            console.log(`ℹ️ info.json не найден для ${slug}, использую значения по умолчанию`);
             masterInfo = getDefaultMasterInfo(slug);
         }
 
@@ -104,11 +123,15 @@ async function sync() {
             const productsPath = path.join(masterPath, 'products');
             if (!fs.existsSync(productsPath)) {
                 fs.mkdirSync(productsPath, { recursive: true });
+                console.log(`📁 Создана папка products для ${slug}`);
             }
 
             console.log(`✨ Добавляю мастера: ${slug} (${masterType})`);
             const result = await pool.query(`
-                INSERT INTO masters (slug, name, short_name, title, bio, badge, rating, works_count, extra_data, type)
+                INSERT INTO masters (
+                    slug, name, short_name, title, bio, badge, 
+                    rating, works_count, extra_data, type
+                )
                 VALUES ($1, $2, $3, $4, $5, $6, $7, 0, $8, $9)
                 RETURNING id
             `, [
@@ -129,8 +152,14 @@ async function sync() {
             console.log(`🔄 Обновляю мастера: ${slug} (${masterType})`);
             await pool.query(`
                 UPDATE masters SET
-                    name = $1, short_name = $2, title = $3, bio = $4,
-                    badge = $5, rating = $6, extra_data = $7, type = $8
+                    name = $1,
+                    short_name = $2,
+                    title = $3,
+                    bio = $4,
+                    badge = $5,
+                    rating = $6,
+                    extra_data = $7,
+                    type = $8
                 WHERE id = $9
             `, [
                 masterInfo.name || getDefaultMasterInfo(slug).name,
@@ -162,20 +191,21 @@ async function sync() {
                 
                 let productInfo = readJsonFile(infoPath);
                 if (!productInfo) {
+                    console.log(`ℹ️ info.json не найден для ${productSlug}, использую значения по умолчанию`);
                     productInfo = getDefaultProductInfo(productSlug);
                 }
 
                 const imageExists = fs.existsSync(imagePath);
                 const imagePathForDb = imageExists ? `/masters/${slug}/products/${productSlug}/main.jpg` : null;
 
-                // 👇 ПРОВЕРЯЕМ, ЕСТЬ ЛИ ТОВАР
+                // Проверяем, есть ли товар в БД
                 const existingProduct = await pool.query(
                     'SELECT id, master_id FROM products WHERE slug = $1',
                     [productSlug]
                 );
 
                 if (existingProduct.rows.length > 0) {
-                    // --- ОБНОВЛЯЕМ СУЩЕСТВУЮЩИЙ ТОВАР ---
+                    // --- ОБНОВЛЕНИЕ СУЩЕСТВУЮЩЕГО ТОВАРА ---
                     console.log(`🔄 Обновляю товар: ${productSlug}`);
                     await pool.query(`
                         UPDATE products SET
@@ -228,6 +258,7 @@ async function sync() {
         }
     }
 
+    // --- ОБНОВЛЯЕМ works_count ДЛЯ ВСЕХ МАСТЕРОВ ---
     console.log('📊 Обновляю количество работ...');
     await pool.query(`
         UPDATE masters 
@@ -239,6 +270,9 @@ async function sync() {
     process.exit(0);
 }
 
+// ============================================================
+// ЗАПУСК
+// ============================================================
 sync().catch(err => {
     console.error('❌ Ошибка синхронизации:', err);
     process.exit(1);

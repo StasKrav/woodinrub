@@ -1,22 +1,24 @@
-const { sendOrderEmail } = require('./mailer');
+require('dotenv').config();
+
 const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const { sendOrderEmail } = require('./mailer');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // ============================================================
-// ПОДКЛЮЧЕНИЕ К БАЗЕ ДАННЫХ
+// ПОДКЛЮЧЕНИЕ К БАЗЕ ДАННЫХ (из .env)
 // ============================================================
 const pool = new Pool({
-    user: 'woodinrub_user',
-    host: 'localhost',
-    database: 'woodinrub',
-    password: 'woodinrub_pass',
-    port: 5432,
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT || 5432,
 });
 
 // ============================================================
@@ -25,20 +27,42 @@ const pool = new Pool({
 app.use(cors());
 app.use(express.json());
 
-// 👇 РАЗДАЁМ СТАТИКУ
+// Раздаём статику
 app.use('/masters', express.static(path.join(__dirname, '../masters')));
 app.use('/js', express.static(path.join(__dirname, '../js')));
 app.use('/css', express.static(path.join(__dirname, '../css')));
 app.use('/images', express.static(path.join(__dirname, '../images')));
-// Раздаём статику из папки components
 app.use('/components', express.static(path.join(__dirname, '../components')));
 
-// 👇 РАЗДАЁМ HTML (чтобы index.html открывался по /)
+// ============================================================
+// СТРАНИЦЫ
+// ============================================================
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../index.html'));
 });
+
 app.get('/index.html', (req, res) => {
     res.sendFile(path.join(__dirname, '../index.html'));
+});
+
+app.get('/masters', (req, res) => {
+    res.sendFile(path.join(__dirname, '../masters/index.html'));
+});
+
+app.get('/catalog', (req, res) => {
+    res.sendFile(path.join(__dirname, '../catalog/index.html'));
+});
+
+app.get('/studios', (req, res) => {
+    res.sendFile(path.join(__dirname, '../studios/index.html'));
+});
+
+app.get('/blog', (req, res) => {
+    res.sendFile(path.join(__dirname, '../blog/index.html'));
+});
+
+app.get('/cart', (req, res) => {
+    res.sendFile(path.join(__dirname, '../cart/index.html'));
 });
 
 // ============================================================
@@ -209,37 +233,6 @@ app.get('/api/masters/:slug/products', async (req, res) => {
 });
 
 // ============================================================
-// СТРАНИЦЫ
-// ============================================================
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../index.html'));
-});
-
-app.get('/masters', (req, res) => {
-    res.sendFile(path.join(__dirname, '../masters/index.html'));
-});
-
-// Страница корзины
-app.get('/cart', (req, res) => {
-    res.sendFile(path.join(__dirname, '../cart/index.html'));
-});
-
-// Страница каталога
-app.get('/catalog', (req, res) => {
-    res.sendFile(path.join(__dirname, '../catalog/index.html'));
-});
-
-// Страница студий
-app.get('/studios', (req, res) => {
-    res.sendFile(path.join(__dirname, '../studios/index.html'));
-});
-
-// Страница блога
-app.get('/blog', (req, res) => {
-    res.sendFile(path.join(__dirname, '../blog/index.html'));
-});
-
-// ============================================================
 // API: ОФОРМЛЕНИЕ ЗАКАЗА
 // ============================================================
 app.post('/api/orders', async (req, res) => {
@@ -254,10 +247,8 @@ app.post('/api/orders', async (req, res) => {
             return res.status(400).json({ error: 'Имя и телефон обязательны' });
         }
         
-        // Генерируем номер заказа
         const orderNumber = 'ORD-' + Date.now().toString().slice(-8) + '-' + Math.random().toString(36).slice(2, 6).toUpperCase();
         
-        // Сохраняем заказ в БД
         const result = await pool.query(`
             INSERT INTO orders (
                 order_number, customer_name, customer_phone, customer_email,
@@ -269,7 +260,6 @@ app.post('/api/orders', async (req, res) => {
         
         const orderId = result.rows[0].id;
         
-        // Сохраняем товары
         for (const item of items) {
             await pool.query(`
                 INSERT INTO order_items (order_id, product_id, product_name, price, quantity)
@@ -277,7 +267,7 @@ app.post('/api/orders', async (req, res) => {
             `, [orderId, item.id, item.name, item.price, item.quantity]);
         }
         
-        // 📧 Отправляем письмо
+        // Отправляем письмо
         try {
             await sendOrderEmail({
                 orderNumber,
@@ -305,7 +295,15 @@ app.post('/api/orders', async (req, res) => {
     }
 });
 
-
+// ============================================================
+// ОБРАБОТКА ОШИБОК (для production)
+// ============================================================
+if (process.env.NODE_ENV === 'production') {
+    app.use((err, req, res, next) => {
+        console.error(err.stack);
+        res.status(500).json({ error: 'Внутренняя ошибка сервера' });
+    });
+}
 
 // ============================================================
 // ЗАПУСК СЕРВЕРА
@@ -314,5 +312,6 @@ app.listen(port, () => {
     console.log(`🚀 API работает на http://localhost:${port}`);
     console.log(`📦 Товары: http://localhost:${port}/api/products`);
     console.log(`👤 Мастера: http://localhost:${port}/api/masters`);
-    console.log(`🌐 Сайт: http://localhost:${port}/index.html`);
+    console.log(`🌐 Сайт: http://localhost:${port}/`);
+    console.log(`📧 NODE_ENV: ${process.env.NODE_ENV || 'development'}`);
 });
