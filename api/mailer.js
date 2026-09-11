@@ -1,17 +1,17 @@
+require('dotenv').config();
 const nodemailer = require('nodemailer');
 
 // ============================================================
-// НАСТРОЙКИ ПОЧТЫ
+// НАСТРОЙКИ ПОЧТЫ (из .env)
 // ============================================================
-const EMAIL_USER = 'krav.stan@yandex.ru';      // 👈 Ваш email (отправитель)
-const EMAIL_PASS = 'fmerxgxrowgrwkhp';    // 👈 Пароль приложения (не от почты!)
-const EMAIL_TO = 'krav.stan@yandex.ru';  // 👈 Куда отправлять заказы
+const EMAIL_USER = process.env.EMAIL_USER;
+const EMAIL_PASS = process.env.EMAIL_PASS;
+const EMAIL_TO = process.env.EMAIL_TO;
 
-// Создаём транспорт
 const transporter = nodemailer.createTransport({
     host: 'smtp.yandex.ru',
     port: 465,
-    secure: true, // true для 465, false для 587
+    secure: true,
     auth: {
         user: EMAIL_USER,
         pass: EMAIL_PASS,
