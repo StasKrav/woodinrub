@@ -414,7 +414,7 @@ app.get('/admin', (req, res) => {
 // ============================================================
 app.post('/api/admin/masters', async (req, res) => {
     try {
-        const { slug, name, short_name, type, title, badge, bio, city, experience, education, style, materials, instagram, phone } = req.body;
+        const { slug, name, short_name, type, title, badge, rating, bio, city, experience, education, style, materials, instagram, phone } = req.body;
         
         if (!slug || !name) {
             return res.status(400).json({ error: 'Slug и имя обязательны' });
@@ -438,10 +438,10 @@ app.post('/api/admin/masters', async (req, res) => {
         
         // Создаём запись в БД
         const result = await pool.query(`
-            INSERT INTO masters (slug, name, short_name, title, bio, badge, type, extra_data, is_active)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, true)
+            INSERT INTO masters (slug, name, short_name, title, bio, badge, rating, type, extra_data, is_active)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, true)
             RETURNING id
-        `, [slug, name, short_name, title, bio, badge, type, JSON.stringify(extraData)]);
+        `, [slug, name, short_name, title, bio, badge, rating || 5.0, type, JSON.stringify(extraData)]);
         
         // Создаём папку мастера и info.json
         const masterPath = path.join(__dirname, '../masters', slug);
@@ -498,7 +498,7 @@ app.post('/api/admin/masters', async (req, res) => {
 app.put('/api/admin/masters/:slug', async (req, res) => {
     try {
         const { slug } = req.params;
-        const { name, short_name, type, title, badge, bio, city, experience, education, style, materials, instagram, phone } = req.body;
+        const { name, short_name, type, title, badge, rating, bio, city, experience, education, style, materials, instagram, phone } = req.body;
         
         const extraData = {
             city: city || null,
@@ -517,11 +517,12 @@ app.put('/api/admin/masters/:slug', async (req, res) => {
                 type = $3,
                 title = $4,
                 badge = $5,
-                bio = $6,
-                extra_data = $7
-            WHERE slug = $8
+                rating = $6,
+                bio = $7,
+                extra_data = $8
+            WHERE slug = $9
             RETURNING id
-        `, [name, short_name, type, title, badge, bio, JSON.stringify(extraData), slug]);
+        `, [name, short_name, type, title, badge, rating || 5.0, bio, JSON.stringify(extraData), slug]);
         
         if (result.rows.length === 0) {
             return res.status(404).json({ error: 'Мастер не найден' });
